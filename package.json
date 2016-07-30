@@ -1,0 +1,24 @@
+{
+  "name": "genericrest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp watch-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/skewwhiffy/genericrest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/skewwhiffy/genericrest/issues"
+  },
+  "homepage": "https://gitlab.com/skewwhiffy/genericrest#README",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.1.0"
+  }
+}
