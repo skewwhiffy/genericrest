@@ -17,7 +17,14 @@ describe("/_/health/check endpoint", function() {
   })
 
   it("returns 200", function(done) {
-    request("http://localhost:8080/_/health/check", (e, r, b) => {
+    request("http://localhost:8080/_/HEalth/check", (e, r, b) => {
+      expect(r.statusCode).to.equal(200);
+      done();
+    });
+  })
+
+  it("returns 200 without the _ when there are no entities defined", function(done) {
+    request("http://localhost:8080/health/CHEck", (e, r, b) => {
       expect(r.statusCode).to.equal(200);
       done();
     });
