@@ -5,7 +5,7 @@ let request = require("request");
 let expect = require("chai").expect;
 let http = require("http");
 
-describe("/_/health/check endpoint", function() {
+describe("/_/health/check endpoint", () => {
   let testServer;
 
   beforeEach(() => {
@@ -16,17 +16,35 @@ describe("/_/health/check endpoint", function() {
     testServer.stop();
   })
 
-  it("returns 200", function(done) {
-    request("http://localhost:8080/_/HEalth/check", (e, r, b) => {
-      expect(r.statusCode).to.equal(200);
-      done();
-    });
+  describe("When I make a request", () => {
+    let response;
+
+    beforeEach(done => {
+      request("http://localhost:8080////_//HEalth/check", (e, r, b) => {
+        response = r;
+        done();
+      });
+    })
+
+    it("returns 200", () => {
+      expect(response.statusCode).to.equal(200);
+    })
   })
 
-  it("returns 200 without the _ when there are no entities defined", function(done) {
-    request("http://localhost:8080/health/CHEck", (e, r, b) => {
-      expect(r.statusCode).to.equal(200);
-      done();
-    });
+  describe("When there are no entities defined", () => {
+    describe("When I make a request without the _ admin indicator", () => {
+      let response;
+
+      beforeEach(done => {
+        request("http://localhost:8080/health////CHEck//", (e, r, b) => {
+          response = r;
+          done();
+        })
+      })
+
+      it("returns 200", () => {
+        expect(response.statusCode).to.equal(200);
+      })
+    })
   })
 })
