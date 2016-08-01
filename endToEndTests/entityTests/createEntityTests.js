@@ -10,8 +10,8 @@ describe("Given an entity definition", () => {
   let entityDef;
 
   beforeEach(done => {
-    testServer = new TestServer();
     entityDef = {
+      name: "testEntity",
       fields: {
         name: {
           type: "string",
@@ -28,14 +28,30 @@ describe("Given an entity definition", () => {
         }
       }
     }
-    request.post("http://localhost:8080/_/entity/testEntity", entityDef, (e, r, b) => {
-      expect(r.statusCode).to.equal(200);
-      done();
-    })
+    testServer = new TestServer(() => {
+      request.post({
+        url: "http://localhost:8080/_/entity/testEntity",
+        method: "POST",
+        json: entityDef
+      }, (e, r, b) => {
+        expect(r.statusCode).to.equal(201);
+        done();
+      })
+    });
+
   })
 
   afterEach(() => {
     testServer.stop();
+  })
+
+  it.only("Then I can read it back by name", done => {
+    request("http://localhost:8080/_/entity/testEntity", (e, r, b) => {
+      expect(r.statusCode).to.equal(200);
+      let returnedDefinition = JSON.parse(b);
+      expect(returnedDefinition).to.deep.equal(entityDef);
+      done();
+    })
   })
 
   describe("When I create an entity instance", () => {
@@ -64,8 +80,8 @@ describe("Given an entity definition", () => {
         })
       })
 
-      it.only("matches the one I created", () => {
-
+      it("matches the one I created", () => {
+        expect(JSON.parse(instanceReturned)).to.deep.equal(instance);
       });
     })
   })

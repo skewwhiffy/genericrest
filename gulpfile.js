@@ -14,3 +14,11 @@ gulp.task("run", function () {
 gulp.task("watch-run", function () {
     gulp.watch(['**/*.js'], ['run']);
 });
+
+gulp.task('watch-server', function () {
+  nodemon({
+    script: 'index.js',
+    ext: 'js html',
+    env: { 'NODE_ENV': 'development' }
+  })
+})
