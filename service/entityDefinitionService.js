@@ -9,9 +9,10 @@ module.exports = function(entityDefinitionRepository) {
   }
 
   self.read = (name, callback) => {
-    callback({
-      name: "testEntity"
-    });
+    entityDefinitionRepository.read(name, (err, def) => {
+      if (err) throw err;
+      callback(err, def);
+    })
     return true;
   }
 }

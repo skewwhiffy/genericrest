@@ -31,7 +31,7 @@ module.exports = function(entityDefinitionService) {
       return true;
     }
     let name = path[1];
-    return entityDefinitionService.read(name, (def, err) => {
+    return entityDefinitionService.read(name, (err, def) => {
       res.send(def);
     });
   }
