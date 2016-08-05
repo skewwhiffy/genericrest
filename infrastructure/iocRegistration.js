@@ -7,6 +7,7 @@ let EntityController = require("../entity/entitycontroller");
 
 // Repositories
 let EntityDefinitionRepository = require("../repository/entityDefinitionRepository");
+let EntityDefinitionSanitizer = require("../repository/sanitizer/EntityDefinitionSanitizer");
 
 // Services
 let EntityDefinitionService = require("../service/entityDefinitionService");
@@ -29,6 +30,7 @@ module.exports = function() {
 
     // Repositories
     ioc.registerSingleton("entityDefinitionRepository", EntityDefinitionRepository);
+    ioc.registerSingleton("entityDefinitionSanitizer", EntityDefinitionSanitizer);
 
     // Services
     ioc.registerSingleton("entityDefinitionService", EntityDefinitionService);
@@ -41,6 +43,7 @@ module.exports = function() {
     let mongoClient = MongoDb.MongoClient;
     let dbUrl = "mongodb://127.0.0.1:27017/genericRest";
     mongoClient.connect(dbUrl, (e, c) => {
+      if (e) throw e;
       ioc.registerSingleton("db", function() { return c; });
       callback();
     });

@@ -21,6 +21,7 @@
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
     "gulp-nodemon": "^2.1.0",
+    "gulp-util": "^3.0.7",
     "request": "^2.74.0"
   },
   "dependencies": {
