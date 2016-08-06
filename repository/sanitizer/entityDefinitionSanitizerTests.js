@@ -3,7 +3,7 @@
 let expect = require("chai").expect;
 let Sanitizer = require("./entityDefinitionSanitizer");
 
-describe.only("EntityDefinitionSanitizer", () => {
+describe("EntityDefinitionSanitizer", () => {
   let sanitizer;
   let def;
 
@@ -41,7 +41,7 @@ describe.only("EntityDefinitionSanitizer", () => {
     expect(sanitized).to.deep.equal(def);
   })
 
-  it("removed invalid fields in field object", () => {
+  it("removes invalid fields in field object", () => {
     let clone = JSON.parse(JSON.stringify(def));
     clone.fields.name.noWay = "No way, dude";
     let sanitized = sanitizer.clean(clone);

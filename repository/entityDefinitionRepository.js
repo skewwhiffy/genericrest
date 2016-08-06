@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(db, entityDefinitionSanitizer) {
+module.exports = function(db) {
   let self = this;
 
   let collectionName = "_entityDefinition";

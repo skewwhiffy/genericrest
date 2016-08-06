@@ -20,7 +20,8 @@ module.exports = function(entityDefinitionService) {
       let name = path[1];
       def.name = name;
     }
-    return entityDefinitionService.create(def, status => {
+    return entityDefinitionService.create(def, err => {
+      // TODO: error handling
       res.sendStatus(201);
     });
   }

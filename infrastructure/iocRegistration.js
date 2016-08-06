@@ -8,9 +8,11 @@ let EntityController = require("../entity/entitycontroller");
 // Repositories
 let EntityDefinitionRepository = require("../repository/entityDefinitionRepository");
 let EntityDefinitionSanitizer = require("../repository/sanitizer/EntityDefinitionSanitizer");
+let EntityRepository = require("../repository/entityRepository");
 
 // Services
 let EntityDefinitionService = require("../service/entityDefinitionService");
+let EntityService = require("../service/entityService");
 
 // Routers
 let AdminRouter = require("../admin/adminRouter");
@@ -31,9 +33,11 @@ module.exports = function() {
     // Repositories
     ioc.registerSingleton("entityDefinitionRepository", EntityDefinitionRepository);
     ioc.registerSingleton("entityDefinitionSanitizer", EntityDefinitionSanitizer);
+    ioc.registerSingleton("entityRepository", EntityRepository);
 
     // Services
     ioc.registerSingleton("entityDefinitionService", EntityDefinitionService);
+    ioc.registerSingleton("entityService", EntityService);
 
     // Routers
     ioc.registerSingleton("adminRouter", AdminRouter);

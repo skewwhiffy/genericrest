@@ -22,9 +22,13 @@ module.exports = function() {
   let cleanField = source => {
     let cleaned = {};
     let fieldNames = Object.keys(source);
-    cleaned.type = source.type;
-    if (source.mandatory) cleaned.mandatory = source.mandatory;
-    if (source.id) cleaned.id = source.id;
+    if (hasKey(source, "type")) cleaned.type = source.type;
+    if (hasKey(source, "mandatory")) cleaned.mandatory = source.mandatory;
+    if (hasKey(source, "id")) cleaned.id = source.id;
     return cleaned;
+  }
+
+  let hasKey = (source, key) => {
+    return Object.keys(source).indexOf(key) >= 0;
   }
 }

@@ -13,6 +13,7 @@ module.exports = function(adminRouter, entityController) {
       }
       return true;
     }
+
     if (entityController.handle(req, res, path)) return true;
 
     if (adminRouter.handle(req, res, path)) return true;

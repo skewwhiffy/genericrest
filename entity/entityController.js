@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function() {
+module.exports = function(entityService) {
   let self = this;
 
   self.handle = (req, res, path) => {
@@ -15,14 +15,23 @@ module.exports = function() {
   }
 
   self.create = (req, res, path) => {
-    console.log("CREATE");
-    res.json({});
+    let instance = req.body;
+    let defName = path[0];
+    entityService.create(defName, instance, err => {
+      // TODO error handling
+      res.sendStatus(201);
+    })
     return true;
   }
 
   self.read = (req, res, path) => {
-    console.log("READ");
-    res.json({});
+    let defName = path[0];
+    let instanceId = path[1];
+    entityService.read(defName, instanceId, (err, instance) => {
+      // TODO error handling
+      res.json(instance);
+    })
+    console.log("READ: " + defName + ", " + instanceId);
     return true;
   }
 }
