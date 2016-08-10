@@ -7,17 +7,20 @@ module.exports = function(adminRouter, entityController) {
     let path = req.path.split("/").filter(r => !!r).map(r => r.toLowerCase());
     if (path[0] === "_") {
       path.shift();
-      if (!adminRouter.handle(req, res, path)) {
-        res.status(404).send("Not found");
-        return false
-      }
-      return true;
+      handleAdmin(req, res, path);
+      return;
     }
 
-    if (entityController.handle(req, res, path)) return true;
+    entityController.handle(req, res, path, (e, handled) => {
+      if (!handled) {
+        handleAdmin(req, res, path);
+      }
+    })
+  }
 
-    if (adminRouter.handle(req, res, path)) return true;
-    res.status(404).send("Not found");
-    return false;
+  let handleAdmin = (req, res, path) => {
+    adminRouter.handle(req, res, path, (e, handled) => {
+      if (!handled) res.sendStatus(404);
+    });
   }
 }

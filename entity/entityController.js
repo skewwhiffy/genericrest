@@ -3,34 +3,46 @@
 module.exports = function(entityService) {
   let self = this;
 
-  self.handle = (req, res, path) => {
+  self.handle = (req, res, path, callback) => {
     switch (req.method.toUpperCase()) {
       case "POST":
-        return self.create(req, res, path);
+        self.create(req, res, path, callback);
+        break;
       case "GET":
-        return self.read(req, res, path);
+        self.read(req, res, path, callback);
+        break;
       default:
-        return false;
+        callback(false, false);
     }
   }
 
-  self.create = (req, res, path) => {
+  self.create = (req, res, path, callback) => {
     let instance = req.body;
     let defName = path[0];
     entityService.create(defName, instance, err => {
-      // TODO error handling
-      res.sendStatus(201);
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        res.sendStatus(201);
+      }
+      callback(false, true);
     })
-    return true;
   }
 
-  self.read = (req, res, path) => {
+  self.read = (req, res, path, callback) => {
     let defName = path[0];
     let instanceId = path[1];
     entityService.read(defName, instanceId, (err, instance) => {
-      // TODO error handling
-      res.json(instance);
+      if (err === "NoSuchEntityDefinition") {
+        callback(false, false);
+      }
+      else if(!instance) {
+        res.sendStatus(404);
+      }
+      else {
+        res.json(instance);
+      }
+      callback(false, true);
     })
-    return true;
   }
 }

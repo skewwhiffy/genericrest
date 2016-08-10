@@ -84,7 +84,7 @@ describe("Given an entity definition", () => {
         })
       })
 
-      it.only("matches the one I created", () => {
+      it("matches the one I created", () => {
         expect(JSON.parse(instanceReturned)).to.deep.equal(instance);
       });
     })

@@ -7,14 +7,13 @@ module.exports = function(
   entityDefinitionController) {
   let self = this;
 
-  self.handle = (req, res, path) => {
+  self.handle = (req, res, path, callback) => {
     if (path.length < 1) return false;
 
     let controller = path[0];
 
-    if (controller === "health") return healthController.handle(req, res, path);
-    if (controller === "entity") return entityDefinitionController.handle(req, res, path);
-
-    return false;
+    if (controller === "health") callback(false, healthController.handle(req, res, path));
+    else if (controller === "entity") callback(false, entityDefinitionController.handle(req, res, path));
+    else callback(false, false);
   }
 }
