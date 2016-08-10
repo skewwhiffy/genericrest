@@ -59,7 +59,7 @@ describe("Given an entity definition", () => {
 
     beforeEach(done => {
       instance = {
-        name: "testInstance",
+        name: "testinstance",
         mandatoryInteger: 7,
         nonMandatoryDecimal: 3.14
       };
@@ -85,7 +85,7 @@ describe("Given an entity definition", () => {
       })
 
       it.only("matches the one I created", () => {
-        //expect(JSON.parse(instanceReturned)).to.deep.equal(instance);
+        expect(JSON.parse(instanceReturned)).to.deep.equal(instance);
       });
     })
   })

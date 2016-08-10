@@ -9,6 +9,10 @@ module.exports = function(entityRepository) {
   }
 
   self.read = (defName, instanceId, callback) => {
-
+    entityRepository.read(defName, instanceId, (e, i) => {
+      // TODO: sanitize
+      if (i) i._id = undefined;
+      callback(e, i);
+    });
   }
 }

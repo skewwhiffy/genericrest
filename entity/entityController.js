@@ -29,9 +29,9 @@ module.exports = function(entityService) {
     let instanceId = path[1];
     entityService.read(defName, instanceId, (err, instance) => {
       // TODO error handling
+      console.log("Got instance: " + JSON.stringify(instance));
       res.json(instance);
     })
-    console.log("READ: " + defName + ", " + instanceId);
     return true;
   }
 }
