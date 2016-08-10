@@ -1,19 +1,22 @@
 "use strict";
 
-module.exports = function(db) {
+module.exports = function(entityDefinitionRepository, entitySanitizer, db) {
   let self = this;
 
   self.create = (defName, instance, callback) => {
     let collectionName = defName.toLowerCase();
-    db.collection(collectionName).insert(instance, callback);
+    entityDefinitionRepository.read(defName, (e, def) => {
+      // TODO: error handling
+      let sanitized = entitySanitizer.cleanForDb(instance, def);
+      db.collection(collectionName).insert(sanitized, callback);
+    })
   }
 
   self.read = (defName, instanceId, callback) => {
     let collectionName = defName.toLowerCase();
-    db.collection(collectionName).find().toArray((e, r) => {
-      console.log(r);
-      console.log(instanceId);
+    db.collection(collectionName).findOne({_id: instanceId}, (e, ins) => {
+      // TODO: error handling
+      callback(e, entitySanitizer.cleanForTransfer(ins));
     });
-    db.collection(collectionName).findOne({name: instanceId}, callback);
   }
 }
